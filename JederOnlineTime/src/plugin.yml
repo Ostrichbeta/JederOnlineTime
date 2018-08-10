@@ -1,5 +1,5 @@
 name: JederOnlineTime
-main: com.jeder.onlineTime
+main: com.jeder.onlineTime.Main
 version: 0.1
 description: 計算玩家線上時間
 commands:
