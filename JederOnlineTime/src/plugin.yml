@@ -1,0 +1,14 @@
+name: JederOnlineTime
+main: com.jeder.onlineTime
+version: 0.1
+description: 計算玩家線上時間
+commands:
+  jederOnlineTime:
+    description: JederOnlineTime主要指令
+    aliases: jot
+    usage: 用法：/jot query [用戶名] 或 /jot help
+
+permission:
+  jederOnlineTime.seeOthers:
+    description: 擁有該指令可以查看其他玩家的線上時間
+    default: false
