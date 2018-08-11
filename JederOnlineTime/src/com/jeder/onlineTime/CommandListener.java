@@ -7,6 +7,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
+import java.io.Console;
+
 public class CommandListener implements CommandExecutor {
     private final Main plugin ;
 
@@ -18,9 +20,8 @@ public class CommandListener implements CommandExecutor {
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         //開始偵聽指令部分
         boolean isConsole = false ;
-        Player cs = ( Player ) commandSender ;
-        if ( commandSender instanceof ConsoleCommandSender)
-        {
+
+        if ( commandSender instanceof ConsoleCommandSender) {
             isConsole = true ;
         }
         String playerName ;
@@ -29,9 +30,10 @@ public class CommandListener implements CommandExecutor {
             if ( strings.length == 0 ) {
                 //沒有任何的參數
                if ( isConsole ) {
-                   plugin.getLogger().info( ChatColor.GOLD + "[JederOnlineTime] " + "用法：/jot query <玩家名>" );
+                   plugin.getLogger().info( ChatColor.GOLD +  "用法：/jot query <玩家名>" );
                }
                else {
+                   Player cs = ( Player ) commandSender ;
                    cs.sendMessage(ChatColor.GOLD + "[JederOnlineTime] " + "用法：/jot query"  ) ;
                    return true ;
                }
@@ -39,6 +41,7 @@ public class CommandListener implements CommandExecutor {
             else if ( strings [ 0 ].equalsIgnoreCase( "query" ) ) {
                 if ( !isConsole ) {
                     //不是控制台
+                    Player cs = ( Player ) commandSender ;
                     playerName = cs.getName() ; //獲取玩家名字
                     switch ( strings.length ) {
                         case 1:
@@ -80,11 +83,11 @@ public class CommandListener implements CommandExecutor {
                     //指令是由控制台發出的
                     if ( strings.length < 2 ) {
                         //沒有多餘的參數
-                        plugin.getLogger().info( ChatColor.GOLD + "[JederOnlineTime] " + "用法：/jot query <玩家名>" );
+                        plugin.getLogger().info( ChatColor.GOLD +  "用法：/jot query <玩家名>" );
                         return true ;
                     }
                     else if ( strings.length > 2 ){
-                        plugin.getLogger().info( ChatColor.GOLD + "[JederOnlineTime] " + "用法：/jot query <玩家名>" );
+                        plugin.getLogger().info( ChatColor.GOLD +  "用法：/jot query <玩家名>" );
                         return true ;
                     }
                     else
@@ -94,10 +97,10 @@ public class CommandListener implements CommandExecutor {
                             //如果設定檔中玩家有記錄
                             long time = plugin.getConfig().getLong( "Players." + playerName ) ;
                             long[] times = new Functions().msToTime( time ) ;
-                            cs.sendMessage(ChatColor.GOLD + "[JederOnlineTime] " + "自從有記錄起，" + strings [ 1 ] + "已經在這個伺服器玩了§l " + times [ 4 ] + " 天 " + times [ 3 ] + " 時 " + times [ 2 ] + " 分 " + times [ 1 ] + " 秒 " + times [ 0 ] + " 毫秒§l。"  ) ;
+                            plugin.getLogger().info(ChatColor.GOLD + "[JederOnlineTime] " + "自從有記錄起，" + strings [ 1 ] + "已經在這個伺服器玩了§l " + times [ 4 ] + " 天 " + times [ 3 ] + " 時 " + times [ 2 ] + " 分 " + times [ 1 ] + " 秒 " + times [ 0 ] + " 毫秒§l。"  ); ;
                         }
                         else {
-                            cs.sendMessage(ChatColor.GOLD + "[JederOnlineTime] " + "找不到這個玩家的訊息，當玩家退出遊戲時，遊玩時間才會被記錄。"  ) ;
+                            plugin.getLogger().info(ChatColor.GOLD + "[JederOnlineTime] " + "找不到這個玩家的訊息，當玩家退出遊戲時，遊玩時間才會被記錄。"  ) ;
                         }
                         return true ;
                     }
@@ -112,6 +115,7 @@ public class CommandListener implements CommandExecutor {
                 }
                 else
                 {
+                    Player cs = ( Player ) commandSender ;
                     //不是從控制台發出
                     cs.sendMessage( " ==== JederOnlineTime 使用幫助 ====" );
                     cs.sendMessage( " /jot query 查詢玩家線上時間" );
